@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "a73172ec-b0e7-4ebf-a70c-18932587274a",
+		"name": "code-challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15590227"
+	},
+	"item": [
+		{
+			"name": "GET Method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Title and body fields have content\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    _.each(jsonData, function (post) {",
+							"        pm.expect(post.title).to.not.be.empty;",
+							"        pm.expect(post.body).to.not.be.empty;",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"Fields do not contain the word 'zombie'\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    _.each(jsonData, function (post) {",
+							"        pm.expect(post.title).to.not.include(\"zombie\");",
+							"        pm.expect(post.body).to.not.include(\"zombie\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200 or 201', () => {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							"",
+							"pm.test('Toppings include bacon, cheese, and mushroom and does not include chicken', () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.json.topping).to.deep.equal(['bacon', 'cheese', 'mushroom']);",
+							"    pm.expect(jsonData.json.topping).to.not.include('chicken');",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n \"student\": \"Tim Allen\", \n \"email_address\": \"tim@homeimprovement.com\",  \n \"phone\": \"(408) 8674530\", \n \"current_grade\": \"B+\", \n \"topping\": [ \n    \"bacon\", \n    \"cheese\", \n    \"mushroom\" \n ] \n}"
+				},
+				"url": {
+					"raw": "https://httpbin.org/post",
+					"protocol": "https",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
